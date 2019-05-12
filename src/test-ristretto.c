@@ -423,7 +423,7 @@ int test_ristretto_ct_eq()
 int main(int argc, char **argv)
 {
 
- int n=1<<16;
+ int n=1<<20;
   clock_t t;
 	t = clock();
 
@@ -444,6 +444,8 @@ memset(b, 0, 32);
 	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds 
 	printf("n= %f\n", n);
 	printf("on_curve? took %f seconds to execute \n", time_taken);
+
+
 
 
 
