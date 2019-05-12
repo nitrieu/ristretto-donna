@@ -423,24 +423,48 @@ int test_ristretto_ct_eq()
 int main(int argc, char **argv)
 {
 
- int n=1<<20;
+ int n=1<<16;
   clock_t t;
 	t = clock();
 
+uint8_t b[32];
+memset(b, 0, 32);
 
 	for (int i = 0; i < n; i++)
 	{
   ristretto_point_t point;
+  b[0] = (uint8_t)(i+10);
+		b[31] &= 0x7f;
   
    // This field element doesn't represent a valid point…
-   ristretto_decode(&point, A_BYTES);
+   ristretto_decode(&point, b);
   }
 
   	t = clock() - t;
 	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds 
-	printf("n= \n", n);
+	printf("n= %f\n", n);
 	printf("on_curve? took %f seconds to execute \n", time_taken);
 
+
+
+
+  ristretto_point_t point;
+  unsigned char bytes[32];
+  unsigned char i;
+  ristretto_decode(&point, RISTRETTO_BASEPOINT_COMPRESSED);
+
+clock_t t1;
+t1 = clock();
+
+
+  for (int i = 0; i < n; i++)
+	{
+    ristretto_encode(bytes, &point);
+  }
+
+  	t1 = clock() - t1;
+	 time_taken = ((double)t1) / CLOCKS_PER_SEC; // in seconds 
+	printf("ristretto_encode_basepoint took %f seconds to execute \n", time_taken);
 
 return 0;
 
