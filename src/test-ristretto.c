@@ -206,6 +206,7 @@ int test_invsqrt_random_field_element()
 
 int test_ristretto_decode_random_invalid_point()
 {
+  //printf(" test_ristretto_decode_random_invalid_point\n");
   ristretto_point_t point;
   uint8_t result;
 
@@ -414,24 +415,49 @@ int test_ristretto_ct_eq()
   }
 
   return result;
+
 }
+
+#include <time.h>
 
 int main(int argc, char **argv)
 {
+
+ int n=1<<20;
+  clock_t t;
+	t = clock();
+
+
+	for (int i = 0; i < n; i++)
+	{
+  ristretto_point_t point;
+  
+   // This field element doesn't represent a valid point…
+   ristretto_decode(&point, A_BYTES);
+  }
+
+  	t = clock() - t;
+	double time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds 
+	printf("n= \n", n);
+	printf("on_curve? took %f seconds to execute \n", time_taken);
+
+
+return 0;
+
   int result;
 
-  result  = test_invsqrt_random_field_element();
-  result &= test_uint8_32_ct_eq();
+  //result  = test_invsqrt_random_field_element();
+  //result &= test_uint8_32_ct_eq();
   result &= test_ristretto_decode_random_invalid_point();
-  result &= test_ristretto_decode_basepoint();
-  result &= test_curve25519_expand_random_field_element();
-  result &= test_curve25519_expand_basepoint();
-  result &= test_curve25519_expand_identity();
-  result &= test_ge25519_unpack_pack();
-  result &= test_ristretto_encode_identity();
-  result &= test_ristretto_encode_basepoint();
-  result &= test_ristretto_encode_small_multiples_of_basepoint();
-  result &= test_ristretto_ct_eq();
+  //result &= test_ristretto_decode_basepoint();
+  //result &= test_curve25519_expand_random_field_element();
+  //result &= test_curve25519_expand_basepoint();
+  //result &= test_curve25519_expand_identity();
+  //result &= test_ge25519_unpack_pack();
+  //result &= test_ristretto_encode_identity();
+  //result &= test_ristretto_encode_basepoint();
+  //result &= test_ristretto_encode_small_multiples_of_basepoint();
+  //result &= test_ristretto_ct_eq();
 
   return result;
 }

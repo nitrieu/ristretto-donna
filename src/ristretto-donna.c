@@ -89,7 +89,7 @@ static uint8_t bignum25519_is_negative(unsigned char bytes[32])
 {
   uint8_t low_bit_is_set = bytes[0] & 1;
 
-  PRINT("low_bit_is_set = %d", low_bit_is_set);
+ // PRINT("low_bit_is_set = %d", low_bit_is_set);
 
   return low_bit_is_set;
 }
@@ -105,7 +105,7 @@ uint8_t curve25519_sqrt_ratio_i(bignum25519 out, const bignum25519 u, const bign
   uint8_t was_nonzero_square;
   uint8_t should_rotate;
 
-  PRINT("sqrt_ratio_i with u,v = "); fe_print(u); fe_print(v);
+  //PRINT("sqrt_ratio_i with u,v = "); fe_print(u); fe_print(v);
 
   curve25519_square(tmp, v);      // v²
   curve25519_mul(v3, tmp, v);     // v³
@@ -118,8 +118,8 @@ uint8_t curve25519_sqrt_ratio_i(bignum25519 out, const bignum25519 u, const bign
   curve25519_square(tmp, r);       // tmp = r^2
   curve25519_mul(check, v, tmp);  // check = r^2 * v
 
-  PRINT("r = "); fe_print(r);
-  PRINT("check = "); fe_print(check);
+ // PRINT("r = "); fe_print(r);
+  //PRINT("check = "); fe_print(check);
   
   curve25519_neg(u_neg, u);
   curve25519_mul(u_neg_i, u_neg, SQRT_M1);
@@ -128,9 +128,9 @@ uint8_t curve25519_sqrt_ratio_i(bignum25519 out, const bignum25519 u, const bign
   flipped_sign_sqrt = bignum25519_ct_eq(check, u_neg);
   flipped_sign_sqrt_i = bignum25519_ct_eq(check, u_neg_i);
 
-  PRINT("correct_sign_sqrt = %d", correct_sign_sqrt);
-  PRINT("flipped_sign_sqrt = %d", flipped_sign_sqrt);
-  PRINT("flipped_sign_sqrt_i = %d", flipped_sign_sqrt_i);
+  //PRINT("correct_sign_sqrt = %d", correct_sign_sqrt);
+ // PRINT("flipped_sign_sqrt = %d", flipped_sign_sqrt);
+ // PRINT("flipped_sign_sqrt_i = %d", flipped_sign_sqrt_i);
 
   curve25519_mul(r_prime, r, SQRT_M1);
   should_rotate = flipped_sign_sqrt | flipped_sign_sqrt_i;
@@ -141,10 +141,10 @@ uint8_t curve25519_sqrt_ratio_i(bignum25519 out, const bignum25519 u, const bign
   r_is_negative = bignum25519_is_negative(r_bytes);
   curve25519_neg(r_negative, r);
   curve25519_swap_conditional(r, r_negative, r_is_negative);
-  PRINT("r = "); fe_print(r);
+  //PRINT("r = "); fe_print(r);
 
   was_nonzero_square = correct_sign_sqrt | flipped_sign_sqrt;
-  PRINT("was_nonzero_square = %d", was_nonzero_square);
+ // PRINT("was_nonzero_square = %d", was_nonzero_square);
 
   curve25519_copy(out, r);
 
